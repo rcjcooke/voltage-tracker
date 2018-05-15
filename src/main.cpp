@@ -2,8 +2,8 @@
 #include <Streaming.h>
 #include <stdlib.h>
 
-#include "VoltageTrackerController.hpp"
-#include "MainMenu.hpp"
+#include "controller/VoltageTrackerController.hpp"
+#include "menus/MainMenu.hpp"
 
 /*******************************
  * Global variables definitions

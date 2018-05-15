@@ -1,17 +1,17 @@
-#ifndef __SETPOINTMENU_H_INCLUDED__
-#define __SETPOINTMENU_H_INCLUDED__
+#ifndef __MAINMENU_H_INCLUDED__
+#define __MAINMENU_H_INCLUDED__
 
 #include "SerialDisplayMenu.hpp"
-#include "VoltageTrackerController.hpp"
+#include "../controller/VoltageTrackerController.hpp"
 
-class SetPointMenu : public SerialDisplayMenu {
+class MainMenu : public SerialDisplayMenu {
 
 public:
   /*******************************
    * Constructors
    *******************************/
-  SetPointMenu(SerialDisplayMenuConfiguration* configuration, SerialDisplayMenu* origin, VoltageTrackerController* vtController);
-  
+  MainMenu(SerialDisplayMenuConfiguration* configuration, VoltageTrackerController* vtController);
+
   /*******************************
    * Actions
    *******************************/
@@ -30,9 +30,9 @@ private:
   /*******************************
    * Member variables
    *******************************/
-  // Pointer to the controller for changing the set point
+  // Pointer to the controller for passing to the set point menu
   VoltageTrackerController* mVoltageTrackerController;
-
+  
 };
 
-#endif // __SETPOINTMENU_H_INCLUDED__
+#endif // __MAINMENU_H_INCLUDED__
