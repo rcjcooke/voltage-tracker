@@ -1,6 +1,7 @@
 #ifndef __TRACKEDINT_H_INCLUDED__
 #define __TRACKEDINT_H_INCLUDED__
 
+// A replacement for int that maintains a historical maximum and minimum.
 class TrackedInt {
 
 public:
