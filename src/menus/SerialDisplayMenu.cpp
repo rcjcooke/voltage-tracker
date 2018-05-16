@@ -102,3 +102,77 @@ void SerialDisplayMenu::updateStatusLine(String statusLine) {
     Serial << _BYTE(27) << "8";
   }
 }
+
+// Processes some raw input and updates the value
+bool handleRawSerialInput(String &inputValue) {
+
+  bool terminated = false;
+  // Process input - waiting for the terminator (enter key)
+  while (!terminated && Serial.available() > 0) {
+    int input=0;
+    input = Serial.read();
+    
+    // Correct for terminals that pad out 7-bit ASCII to 8 bits with an extra high bit 
+    // (like Putty - pretty sure it's because it's translating but I don't care at this point!) 
+    if (input > 127) {
+      input = input - 128;
+    }
+
+    if (input == '\r') {
+      terminated = true;
+    } else if (input == '\b') {
+      inputValue.remove(inputValue.length()-1, 1);
+    } else {
+      inputValue.concat((char) input);
+    }
+  }
+  return terminated;
+}
+
+// Get user input while letting the menu take care of display updates etc.
+String SerialDisplayMenu::getUserInputWhileKeepingStatusUpdated() {
+  String inputValue="";
+  bool terminated = false;
+
+  while (!terminated) {
+
+    // Update display while waiting for user input
+    uint16_t i=0;
+    while (Serial.available()==0) {
+      // Update the current Voltage (updates from external source if required, gets feedback and adjusts for error)
+      controllerUpdate();
+
+      // Update the status every now and then
+      if (mConfigurationPtr->getDisplayStatusLine()) {
+        if (i % (mConfigurationPtr->getUserStatusUpdateFrequencyModulus()) == 0) {
+          // Update the user
+          String statusLine = constructStatusLine();
+          updateStatusLine(statusLine);
+        }
+        i++;
+      }
+    }
+
+    // Process the new buffer content and update the inputValue with it
+    terminated = handleRawSerialInput(inputValue);
+
+  }
+  return inputValue;
+}
+
+// Note: This is a static method as defined in the class header
+void SerialDisplayMenu::userInputLoop(SerialDisplayMenu* startingMenu) {
+  SerialDisplayMenu* currentMenu = startingMenu;
+  while(true) {
+    // Show the current menu to the user
+    currentMenu->display();
+
+    // Get user input while letting the menu take care of display updates etc.
+    String inputValue = currentMenu->getUserInputWhileKeepingStatusUpdated();
+
+    // Process the fully formed user input
+    SerialDisplayMenu* newMenu = currentMenu->processUserInput(inputValue);
+    if (newMenu != currentMenu) delete currentMenu;
+    currentMenu = newMenu;
+  }
+}

@@ -15,13 +15,14 @@ public:
   /*******************************
    * Constructors
    *******************************/
-  SerialDisplayMenuConfiguration(SerialDisplayType displayType, bool displayStatusLine);
+  SerialDisplayMenuConfiguration(SerialDisplayType displayType, bool displayStatusLine, int userStatusUpdateFrequencyModulus);
 
   /*******************************
    * Accessors
    *******************************/
   SerialDisplayType getSerialDisplayType() const;
   bool getDisplayStatusLine() const;
+  int getUserStatusUpdateFrequencyModulus() const;
 
   /*******************************
    * Actions
@@ -35,6 +36,8 @@ private:
   SerialDisplayType mSerialDisplay;
   // Defines whether a status line is included on the menus
   bool mDisplayStatusLine;
+  // The number of loops between the user getting terminal status updates
+  int mUserStatusUpdateFrequencyModulus;
 
 };
 

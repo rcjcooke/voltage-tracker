@@ -1,10 +1,9 @@
 #ifndef __SETPOINTMENU_H_INCLUDED__
 #define __SETPOINTMENU_H_INCLUDED__
 
-#include "SerialDisplayMenu.hpp"
-#include "../controller/VoltageTrackerController.hpp"
+#include "VTSDM.hpp"
 
-class SetPointMenu : public SerialDisplayMenu {
+class SetPointMenu : public VTSDM {
 
 public:
   /*******************************
@@ -16,7 +15,7 @@ public:
    * Actions
    *******************************/
   // Processes user input
-  SerialDisplayMenu* processUserInput(long userInput);
+  SerialDisplayMenu* processUserInput(String userInput);
 
 protected:
   /*******************************

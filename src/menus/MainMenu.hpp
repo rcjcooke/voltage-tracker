@@ -1,10 +1,9 @@
 #ifndef __MAINMENU_H_INCLUDED__
 #define __MAINMENU_H_INCLUDED__
 
-#include "SerialDisplayMenu.hpp"
-#include "../controller/VoltageTrackerController.hpp"
+#include "VTSDM.hpp"
 
-class MainMenu : public SerialDisplayMenu {
+class MainMenu : public VTSDM {
 
 public:
   /*******************************
@@ -16,7 +15,7 @@ public:
    * Actions
    *******************************/
   // Processes user input
-  SerialDisplayMenu* processUserInput(long userInput);
+  SerialDisplayMenu* processUserInput(String userInput);
 
 protected:
   /*******************************
@@ -27,12 +26,6 @@ protected:
   void printMenu();
 
 private:
-  /*******************************
-   * Member variables
-   *******************************/
-  // Pointer to the controller for passing to the set point menu
-  VoltageTrackerController* mVoltageTrackerController;
-  
 };
 
 #endif // __MAINMENU_H_INCLUDED__

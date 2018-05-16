@@ -6,8 +6,7 @@
  * Constructors
  *******************************/
 
-MainMenu::MainMenu(SerialDisplayMenuConfiguration* configuration, VoltageTrackerController* vtController) : SerialDisplayMenu(configuration, (int8_t) 7, (int8_t) 8) {
-  mVoltageTrackerController = vtController;
+MainMenu::MainMenu(SerialDisplayMenuConfiguration* configuration, VoltageTrackerController* vtController) : VTSDM(configuration, vtController, nullptr, (int8_t) 7, (int8_t) 8) {
 }
 
 /*******************************
@@ -25,15 +24,15 @@ void MainMenu::printMenu() {
   Serial << "  Choice (number followed by enter): ";
 }
 
-SerialDisplayMenu* MainMenu::processUserInput(long userInput) {
+SerialDisplayMenu* MainMenu::processUserInput(String userInput) {
   
   SerialDisplayMenu* returnMenu = this;
-  if (userInput == 1) {
+  if (userInput.equals("1")) {
     if (mVoltageTrackerController->getInputMode() == VTInputMode::ExternalInput) {
       mVoltageTrackerController->setInputMode(VTInputMode::DigitalInput);
     }
     returnMenu = new SetPointMenu(getSerialDisplayMenuConfiguration(), this, mVoltageTrackerController);
-  } else if (userInput == 2) {
+  } else if (userInput.equals("2")) {
     returnMenu = new SetPointOriginMenu(getSerialDisplayMenuConfiguration(), this, mVoltageTrackerController);
   } else {
     displayError("Please pick either 1 or 2, you entered " + String(userInput));

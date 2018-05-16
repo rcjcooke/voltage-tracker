@@ -2,9 +2,10 @@
 
 #include "SerialDisplayMenuConfiguration.hpp"
 
-SerialDisplayMenuConfiguration::SerialDisplayMenuConfiguration(SerialDisplayType displayType, bool displayStatusLine) {
+SerialDisplayMenuConfiguration::SerialDisplayMenuConfiguration(SerialDisplayType displayType, bool displayStatusLine, int userStatusUpdateFrequencyModulus) {
   mSerialDisplay = displayType;
   mDisplayStatusLine = displayStatusLine;
+  mUserStatusUpdateFrequencyModulus = userStatusUpdateFrequencyModulus;
 }
 
 SerialDisplayType SerialDisplayMenuConfiguration::getSerialDisplayType() const {
@@ -13,4 +14,8 @@ SerialDisplayType SerialDisplayMenuConfiguration::getSerialDisplayType() const {
 
 bool SerialDisplayMenuConfiguration::getDisplayStatusLine() const {
   return mDisplayStatusLine;
+}
+
+int SerialDisplayMenuConfiguration::getUserStatusUpdateFrequencyModulus() const {
+  return mUserStatusUpdateFrequencyModulus;
 }

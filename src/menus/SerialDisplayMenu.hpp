@@ -40,7 +40,10 @@ public:
   // Update the status line
   void updateStatusLine(String statusLine);
   // Acts on user input - returns the menu the user should see next
-  virtual SerialDisplayMenu* processUserInput(long userInput) = 0;
+  virtual SerialDisplayMenu* processUserInput(String userInput) = 0;
+
+  // A main input loop implementation for receiving and processing user input
+  static void userInputLoop(SerialDisplayMenu* startingMenu);
 
 protected:
   /*******************************
@@ -54,6 +57,14 @@ protected:
    *******************************/
   // Must be implemented by concrete classes - this prints the menu over the serial connection
   virtual void printMenu() = 0;
+  // This method is called on every loop while the menu is waiting for user input. It is here in case 
+  // the system needs to keep something up to date while waiting.
+  virtual void controllerUpdate() = 0;
+  // Puts together the one line status update string to show users
+  virtual String constructStatusLine() = 0;
+
+  // Get user input while letting the menu take care of display updates etc.
+  String getUserInputWhileKeepingStatusUpdated();
 
 private:
   /*******************************
