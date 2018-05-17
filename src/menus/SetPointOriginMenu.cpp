@@ -20,13 +20,12 @@ void SetPointOriginMenu::printMenu() {
 }
 
 SerialDisplayMenu* SetPointOriginMenu::processUserInput(String userInput) {
-  
   if (userInput.equals("1")) {
     mVoltageTrackerController->setInputMode(VTInputMode::DigitalInput);
   } else if (userInput.equals("2")) {
     mVoltageTrackerController->setInputMode(VTInputMode::ExternalInput);
   } else {
-    displayError("Please pick either 1 or 2, you entered " + String(userInput));
+    displayError("Please pick either 1 or 2, you entered " + userInput);
     return this;
   }
   return mOrigin;

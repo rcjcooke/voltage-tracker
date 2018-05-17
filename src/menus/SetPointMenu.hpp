@@ -26,11 +26,6 @@ protected:
   void printMenu();
 
 private:
-  /*******************************
-   * Member variables
-   *******************************/
-  // Pointer to the controller for changing the set point
-  VoltageTrackerController* mVoltageTrackerController;
 
 };
 

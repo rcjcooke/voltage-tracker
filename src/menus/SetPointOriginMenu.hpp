@@ -26,11 +26,6 @@ protected:
   void printMenu();
 
 private:
-  /*******************************
-   * Member variables
-   *******************************/
-  // The controller for the voltage tracker this menu controls
-  VoltageTrackerController* mVoltageTrackerController;
   
 };
 

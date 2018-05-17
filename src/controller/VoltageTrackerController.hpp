@@ -43,6 +43,8 @@ public:
   int getDutyCycle() const;
   // The input mode for the controller
   VTInputMode getInputMode() const;
+  // Returns true if feedback is being used for voltage regulation
+  bool getUseFeedback() const;
 
   /*******************************
    * Actions
@@ -58,6 +60,8 @@ public:
   void update();
   // Determines the input mode
   void setInputMode(VTInputMode mode);
+  // Allows a runtime change to whether feedback is used for output control
+  void setUseFeedback(bool useFeedback);
 
 private:
   /*******************************

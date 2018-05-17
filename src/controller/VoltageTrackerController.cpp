@@ -204,9 +204,17 @@ int VoltageTrackerController::getRawExternalSetPointValue() const {
   return mSetPointVoltageADValue;
 }
 
+bool VoltageTrackerController::getUseFeedback() const {
+  return mUseFeedback;
+}
+
 /*******************************
  * Actions
  *******************************/
+
+void VoltageTrackerController::setUseFeedback(bool useFeedback) {
+  mUseFeedback = useFeedback;
+}
 
 int VoltageTrackerController::setSetPoint(int newSetPoint) {
   return setSetPoint(newSetPoint, false);
@@ -232,29 +240,34 @@ int VoltageTrackerController::readExternalSetPoint() {
 }
 
 void VoltageTrackerController::update() {
-  // Read current voltage
-  mFeedbackVoltageADValue = analogRead(getFeedbackPin());
-  mCurrentVoltage = mFeedbackVoltageADValue * AD_POINT_MILLIVOLT_RATIO;
-
   // Update set point from external source if required
   if (getInputMode() == VTInputMode::ExternalInput) {
     int newSetPoint = readExternalSetPoint();
     setSetPoint(newSetPoint);
   }
 
-  // Adjust if required
   if (mUseFeedback) {
+    // Read current voltage
+    mFeedbackVoltageADValue = analogRead(getFeedbackPin());
+    mCurrentVoltage = mFeedbackVoltageADValue * AD_POINT_MILLIVOLT_RATIO;
+
     int error = mSetPoint - mCurrentVoltage;  
     if (abs(error) > TOLERANCE) {
   
       mErrorDutyCycle.setValue(CYCLES_PER_MILLIVOLT * error);
       mBaseDutyCycle = mBaseDutyCycle + mErrorDutyCycle.getValue();
-      if (mBaseDutyCycle < 0) mBaseDutyCycle = 0;
-      if (mBaseDutyCycle > 255) mBaseDutyCycle = 255;
-
-      analogWrite(getControlPin(), mBaseDutyCycle);
     }
+  } else {
+    mBaseDutyCycle = CYCLES_PER_MILLIVOLT * mSetPoint;
   }
+
+  // Cover the limits
+  if (mBaseDutyCycle < 0) mBaseDutyCycle = 0;
+  if (mBaseDutyCycle > 255) mBaseDutyCycle = 255;
+
+  // Update the duty cycle
+  analogWrite(getControlPin(), mBaseDutyCycle);
+
 }
 
 void VoltageTrackerController::setInputMode(VTInputMode mode) {
@@ -263,7 +276,7 @@ void VoltageTrackerController::setInputMode(VTInputMode mode) {
     /** 
      * If we're now sourcing externally, we need to make sure 
      * we've got the new set point. If we're switching back
-     * to digital thendon't bother because the set point
+     * to digital then don't bother because the set point
      * will just remain as whatever it was from the external
      * input previously.
      */

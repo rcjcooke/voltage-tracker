@@ -172,7 +172,8 @@ void SerialDisplayMenu::userInputLoop(SerialDisplayMenu* startingMenu) {
 
     // Process the fully formed user input
     SerialDisplayMenu* newMenu = currentMenu->processUserInput(inputValue);
-    if (newMenu != currentMenu) delete currentMenu;
+    // TODO: SORT OUT CLEANING UP USED MENUS - the below doesn't work properly
+    //if (newMenu != currentMenu) delete currentMenu;
     currentMenu = newMenu;
   }
 }

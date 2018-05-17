@@ -12,6 +12,12 @@ public:
    *******************************/
   VTSDM(SerialDisplayMenuConfiguration* configuration, VoltageTrackerController* VoltageTrackerController, SerialDisplayMenu* origin, int8_t statusLineNumber, int8_t errorLineNumber);
 
+  /*******************************
+   * Static helper methods
+   *******************************/
+  // Converts a VTInputMode into a human readable string
+  static String vtInputMode2Str(VTInputMode mode);
+
 protected:
   /*******************************
    * Actions
@@ -30,6 +36,8 @@ protected:
   VoltageTrackerController* mVoltageTrackerController;
   
 private:
+  // Used for a visible user status update heartbeat
+  int mHrtBeatCharNum;
 };
 
 #endif // __VTSDM_H_INCLUDED__

@@ -16,12 +16,12 @@ void SetPointMenu::printMenu() {
 }
 
 SerialDisplayMenu* SetPointMenu::processUserInput(String userInput) {
-  int newSetPoint = userInput.toInt();
-  if ((int) newSetPoint < 0 || (int) newSetPoint > 5000) {
+  long newSetPoint = userInput.toInt();
+  if (newSetPoint < 0 || newSetPoint > 5000) {
     displayError("Only whole numbers between 0 and 5000 are accepted, rec: " + String(userInput));
     return this;
   }
-  int success = mVoltageTrackerController->setSetPoint((int) newSetPoint);
+  int success = mVoltageTrackerController->setSetPoint(newSetPoint);
   switch (success) {
     case -1:
       displayError("Invalid target voltage, please try again.");
