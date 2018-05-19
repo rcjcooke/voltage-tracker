@@ -5,10 +5,8 @@ static const float MIN_V = 0.0;
 // The arduino supply voltage (and therefore PWM output voltage) in millivolts
 static const float MAX_V = 4892.0;
 // Pre-calculate the number of duty cycle points per millivolt
-// TODO: TEST THIS!! beware of floating point math errors
 static const float CYCLES_PER_MILLIVOLT = 256.0/(MAX_V - MIN_V);
 // Pre-calculate conversion factor for analogue readings to millivolts
-// TODO: TEST THIS!! beware of floating point math errors
 static const float AD_POINT_MILLIVOLT_RATIO = (MAX_V / 1023.0);
 // The error tolerance threshold in mV 
 static const int TOLERANCE = 20;
