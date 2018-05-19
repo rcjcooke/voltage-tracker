@@ -9,6 +9,9 @@ SerialDisplayMenu::SerialDisplayMenu(SerialDisplayMenuConfiguration* configurati
   mConfigurationPtr = configuration;
   mStatusLineNumber = statusLineNumber;
   mErrorLineNumber = errorLineNumber;
+  mErrorDisplayed = false;
+  mErrorCleared = false;
+  mShowError = false;
 }
 
 SerialDisplayMenu::SerialDisplayMenu(SerialDisplayMenuConfiguration* configuration, int8_t statusLineNumber, int8_t errorLineNumber) 
@@ -48,14 +51,34 @@ void SerialDisplayMenu::clearSerialDisplay() {
 void SerialDisplayMenu::display() {
   clearSerialDisplay();
   printMenu();
+  showError();
+}
 
-  if (mCurrentError != NULL) displayError(mCurrentError);
-  
+void SerialDisplayMenu::showError() {
+  if (mShowError) {
+    if (millis() < mLastErrorTimeMillis + mConfigurationPtr->getErrorDisplayTimeMillis()) {
+      if (!mErrorDisplayed) {
+        displayError(mCurrentError);
+        // We only want to write it to screen once
+        mErrorDisplayed = true;
+      }
+    } else {
+      if (!mErrorCleared) {
+        displayError("                                                                                ");
+        mErrorCleared = true;
+      }
+      mErrorDisplayed = false;
+      mShowError = false;
+    }
+  }
 }
 
 void SerialDisplayMenu::displayError(String errorMessage) {
   
   mCurrentError = errorMessage;
+  mLastErrorTimeMillis = millis();
+  mShowError = true;
+  mErrorCleared = false;
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Save Cursor location
@@ -72,8 +95,6 @@ void SerialDisplayMenu::displayError(String errorMessage) {
 
   Serial << "  " << errorMessage << endl;
 
-  // TODO: Sort out error printing for a duration - instantly disappears at the moment because the screen is cleared
-  
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Set characters back to default
     Serial << _BYTE(27) << "[0m";
@@ -143,14 +164,15 @@ String SerialDisplayMenu::getUserInputWhileKeepingStatusUpdated() {
       controllerUpdate();
 
       // Update the status every now and then
-      if (mConfigurationPtr->getDisplayStatusLine()) {
-        if (i % (mConfigurationPtr->getUserStatusUpdateFrequencyModulus()) == 0) {
+      if (i % (mConfigurationPtr->getUserStatusUpdateFrequencyModulus()) == 0) {
+        if (mConfigurationPtr->getDisplayStatusLine()) {
           // Update the user
           String statusLine = constructStatusLine();
           updateStatusLine(statusLine);
         }
-        i++;
+        showError();
       }
+      i++;
     }
 
     // Process the new buffer content and update the inputValue with it

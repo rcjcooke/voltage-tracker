@@ -17,7 +17,7 @@ static const uint8_t VOLTAGE_TRACKER_FEEDBACK_PIN = A0;
 static const uint8_t VOLTAGE_TRACKER_SOURCE_PIN = A1;
 
 // Serial Display Configuration
-SerialDisplayMenuConfiguration* mConfiguration = new SerialDisplayMenuConfiguration(SerialDisplayType::ansi_vt100, true, 500);
+SerialDisplayMenuConfiguration* mConfiguration = new SerialDisplayMenuConfiguration(SerialDisplayType::ansi_vt100, true, 500, 100000);
 // The Voltage Tracker Controller
 VoltageTrackerController* mVoltageTrackerController;
 // The menu we're currently displaying

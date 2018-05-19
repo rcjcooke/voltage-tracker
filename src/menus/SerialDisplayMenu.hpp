@@ -68,16 +68,30 @@ protected:
 
 private:
   /*******************************
+   * Actions
+   *******************************/
+  // Shows an error and handles clearing It
+  void showError();
+
+  /*******************************
    * Member variables
    *******************************/
+  // The display and menu configuration
+  SerialDisplayMenuConfiguration* mConfigurationPtr;
   // The display line number on which to print the status
   int8_t mStatusLineNumber;
   // The display line number on which to print any errors
   int8_t mErrorLineNumber;
+  // If true then the last error is displayed
+  bool mShowError;
+  // The timestamp of the last error
+  long mLastErrorTimeMillis;
   // The current error to display to the user
   String mCurrentError;
-  // The display and menu configuration
-  SerialDisplayMenuConfiguration* mConfigurationPtr;
+  // Set to true once the error has been written to screen - saves on unnecessary screen updates
+  bool mErrorDisplayed;
+  // true once an error has been cleared - saves on unnecessary screen updates
+  bool mErrorCleared;
 
 };
 
