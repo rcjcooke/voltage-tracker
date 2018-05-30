@@ -5,6 +5,8 @@
 #include "controller/VoltageTrackerController.hpp"
 #include "menus/MainMenu.hpp"
 
+// Some comments for fun
+
 /*******************************
  * Global variables definitions
  *******************************/
