@@ -85,7 +85,7 @@ private:
   // If true then the last error is displayed
   bool mShowError;
   // The timestamp of the last error
-  long mLastErrorTimeMillis;
+  unsigned long mLastErrorTimeMillis;
   // The current error to display to the user
   String mCurrentError;
   // Set to true once the error has been written to screen - saves on unnecessary screen updates

@@ -21,7 +21,7 @@ int SerialDisplayMenuConfiguration::getUserStatusUpdateFrequencyModulus() const 
   return mUserStatusUpdateFrequencyModulus;
 }
 
-long SerialDisplayMenuConfiguration::getErrorDisplayTimeMillis() const {
+unsigned long SerialDisplayMenuConfiguration::getErrorDisplayTimeMillis() const {
   return mErrorDisplayTimeMillis;
 }
 

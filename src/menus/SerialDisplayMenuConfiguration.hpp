@@ -23,7 +23,7 @@ public:
   SerialDisplayType getSerialDisplayType() const;
   bool getDisplayStatusLine() const;
   int getUserStatusUpdateFrequencyModulus() const;
-  long getErrorDisplayTimeMillis() const;
+  unsigned long getErrorDisplayTimeMillis() const;
 
   /*******************************
    * Actions
@@ -40,7 +40,7 @@ private:
   // The number of loops between the user getting terminal status updates
   int mUserStatusUpdateFrequencyModulus;
   // The duration to display error messages for in milliseconds
-  long mErrorDisplayTimeMillis;
+  unsigned long mErrorDisplayTimeMillis;
 
 };
 
