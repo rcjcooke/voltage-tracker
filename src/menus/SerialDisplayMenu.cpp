@@ -81,24 +81,24 @@ void SerialDisplayMenu::displayError(String errorMessage) {
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Save Cursor location
-    Serial.print("/e7");
+    Serial.print("\e7");
     // Move the cursor to the correct location
-    Serial.print("/e[H");
-    Serial.print("/e[" + String(getErrorLineNumber()) + "B");
+    Serial.print("\e[H");
+    Serial.print("\e[" + String(getErrorLineNumber()) + "B");
   }
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Set characters to display in red
-    Serial.print("/e[31m");
+    Serial.print("\e[31m");
   }
 
   Serial.println("  " + errorMessage);
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Set characters back to default
-    Serial.print("/e[0m");
+    Serial.print("\e[0m");
     // Restore Cursor location
-    Serial.print("/e8");
+    Serial.print("\e8");
   }
 }
 
@@ -106,20 +106,20 @@ void SerialDisplayMenu::updateStatusLine(String statusLine) {
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Save Cursor location
-    Serial.print("/e7");
+    Serial.print("\e7");
   }
   
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Move the cursor to the correct location
-    Serial.print("/e[H");
-    Serial.print("/e[" + String(getStatusLineNumber()) + "B");
+    Serial.print("\e[H");
+    Serial.print("\e[" + String(getStatusLineNumber()) + "B");
   }
 
   Serial.print(statusLine);
 
   if (mConfigurationPtr->getSerialDisplayType() == SerialDisplayType::ansi_vt100) {
     // Restore Cursor location
-    Serial.print("/e8");
+    Serial.print("\e8");
   }
 }
 
