@@ -12,7 +12,7 @@ SetPointMenu::SetPointMenu(SerialDisplayMenuConfiguration* configuration, Serial
  *******************************/
 
 void SetPointMenu::printMenu() {
-  Serial << "  Please type in the new voltage in millivolts, e.g. 1000 for 1 Volt: ";
+  Serial.println("  Please type in the new voltage in millivolts, e.g. 1000 for 1 Volt: ");
 }
 
 SerialDisplayMenu* SetPointMenu::processUserInput(String userInput) {

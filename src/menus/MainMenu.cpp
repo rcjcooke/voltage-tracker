@@ -14,19 +14,19 @@ MainMenu::MainMenu(SerialDisplayMenuConfiguration* configuration, VoltageTracker
  *******************************/
 
 void MainMenu::printMenu() {
-  Serial << "  Please choose a menu item by number." << endl << endl;
+  Serial.print("  Please choose a menu item by number.\n\n");
   if (mVoltageTrackerController->getInputMode() == VTInputMode::DigitalInput) {
-    Serial << "\t[1] Define new Set Point (SP)" << endl;
+    Serial.println("\t[1] Define new Set Point (SP)");
   } else {
-    Serial << "\t[1] Define new Set Point (SP) (changes back to digital input)" << endl;
+    Serial.println("\t[1] Define new Set Point (SP) (changes back to digital input)");
   }
-  Serial << "\t[2] Choose Set Point origin (Pot/PC)" << endl;
+  Serial.println("\t[2] Choose Set Point origin (Pot/PC)");
   if (mVoltageTrackerController->getUseFeedback()) {
-    Serial << "\t[3] Stop using feedback in output regulation" << endl << endl;
+    Serial.print("\t[3] Stop using feedback in output regulation\n\n");
   } else {
-    Serial << "\t[3] Start using feedback in output regulation" << endl << endl;
+    Serial.print("\t[3] Start using feedback in output regulation\n\n");
   }
-  Serial << "  Choice (number followed by enter): ";
+  Serial.print("  Choice (number followed by enter): ");
 }
 
 SerialDisplayMenu* MainMenu::processUserInput(String userInput) {

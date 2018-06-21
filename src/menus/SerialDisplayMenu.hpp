@@ -2,9 +2,6 @@
 #define __SERIALDISPLAYMENU_H_INCLUDED__
 
 #include <Arduino.h>
-#include <stdint.h>
-#include <stdarg.h>
-#include <Streaming.h>
 
 #include "SerialDisplayMenuConfiguration.hpp"
 

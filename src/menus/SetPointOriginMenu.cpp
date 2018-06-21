@@ -13,10 +13,10 @@ SetPointOriginMenu::SetPointOriginMenu(SerialDisplayMenuConfiguration* configura
  *******************************/
 
 void SetPointOriginMenu::printMenu() {
-  Serial << "  Please choose target voltage origin by number." << endl << endl;
-  Serial << "\t[1] Set digitally from terminal menu" << endl;
-  Serial << "\t[2] Set using Potentiometer" << endl << endl;
-  Serial << "  Choice (number followed by enter): ";
+  Serial.print("  Please choose target voltage origin by number.\n\n");
+  Serial.print("\t[1] Set digitally from terminal menu\n");
+  Serial.print("\t[2] Set using Potentiometer\n\n");
+  Serial.print("  Choice (number followed by enter): ");
 }
 
 SerialDisplayMenu* SetPointOriginMenu::processUserInput(String userInput) {
